@@ -1,57 +1,24 @@
-import React from 'react';
-import logo from './logo.svg';
-import { Counter } from './features/counter/Counter';
+import { AllMeetupsPage } from './pages/all-meetups-page/all-meetups-page';
 import './App.css';
-
+import Layout from './layout/layout/layout';
+import { Switch, Route } from "react-router-dom";
+import { CreateMeetupPage } from './pages/create-meetup-page/create-meetup-page';
+import FavoriteMeetupsPage from './pages/favorite-meetups-page/favorite-meetups-page';
+import { useAppSelector } from './redux/hooks';
+import { selectFavoriteMeetupsCount } from './redux/meetupsSlice';
 function App() {
+
+  const favoriteMeetupsCount = useAppSelector(selectFavoriteMeetupsCount);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <Counter />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <span>
-          <span>Learn </span>
-          <a
-            className="App-link"
-            href="https://reactjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux-toolkit.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux Toolkit
-          </a>
-          ,<span> and </span>
-          <a
-            className="App-link"
-            href="https://react-redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React Redux
-          </a>
-        </span>
-      </header>
-    </div>
+    <Layout favoriteMeetupsCount={favoriteMeetupsCount}>
+      <Switch>
+        <Route path="/" exact component={AllMeetupsPage} />
+        <Route path="/new-meetup" exact component={CreateMeetupPage} />
+        <Route path="/favorites" exact component={FavoriteMeetupsPage} />
+      </Switch>
+    </Layout>
+
   );
 }
 
